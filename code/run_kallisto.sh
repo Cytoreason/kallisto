@@ -38,7 +38,7 @@ do
 	 	SAMPLE_OUTPUT_DIR="${CUR_OUTPUT_DIR}/${sampleID}" 
 	 	mkdir $SAMPLE_OUTPUT_DIR
 	  	echo "Analyzing sample ${sampleID}"
-	 	kallisto quant -i ${INDEX_DIR}/Homo_sapiens.GRCh38.87.cdna.all.idx -o $SAMPLE_OUTPUT_DIR -b 100 -t 8 ${sampleID}1.fastq.gz ${sampleID}2.fastq.gz
+		/root/kallisto_linux-v0.43.1/kallisto quant -i ${INDEX_DIR}/Homo_sapiens.GRCh38.87.cdna.all.idx -o $SAMPLE_OUTPUT_DIR -b 100 -t 8 ${sampleID}1.fastq.gz ${sampleID}2.fastq.gz
 	done
 
 	echo $?
