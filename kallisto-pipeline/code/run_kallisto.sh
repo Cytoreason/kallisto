@@ -12,7 +12,7 @@ if [ $# -ne 4 ]; then
 	INDEX_DIR=$(readlink -f $3)
 	echo "Using $INPUT_DIR as input directory, $OUTPUT_DIR as output directory, and $INDEX_DIR as index directory"
 else
-	echo "Usage: atac_pipeline.sh /directory/to/analyze /directory/to/output /directory/with/indices"
+	echo "Usage: run_kallisto.sh /directory/to/analyze /directory/to/output /directory/with/indices"
 	exit 1
 fi
 

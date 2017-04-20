@@ -1,0 +1,32 @@
+{
+    "pipeline": {
+        "name": "kallisto_stage1"
+    },
+    "transform": {
+        "image": "gcr.io/pici-upenn/kallisto-pipeline:faa4d37514516fa1fbb6cb610f3f0bd249654910",
+        "cmd": ["/bin/bash"],
+        "stdin":[
+            "echo 'running stage 1'",
+            "/code/run_kallisto.sh /pfs/kallisto_input_full /pfs/out /pfs/kallisto_indices",
+            "echo 'done running stage 1'"
+        ]
+    },
+    "inputs": [
+        {
+            "name": "kallisto_input_full",
+            "repo": {
+                "name": "kallisto_input_full"
+            },
+            "glob": "/*",
+            "lazy": false
+        },
+        {
+            "name": "kallisto_indices",
+            "repo": {
+                "name": "kallisto_indices"
+            },
+            "glob": "/",
+            "lazy": false
+        }
+    ]
+}

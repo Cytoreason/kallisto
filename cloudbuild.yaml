@@ -1,0 +1,6 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/kallisto-pipeline:$REVISION_ID', '.']
+  dir: 'kallisto-pipeline'
+timeout: '5m'
+images: ['gcr.io/$PROJECT_ID/kallisto-pipeline:$REVISION_ID']
