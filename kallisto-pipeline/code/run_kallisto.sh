@@ -32,13 +32,14 @@ do
 	cd $CUR_INPUT_DIR
 	echo "Analyzing files in ${CUR_INPUT_DIR}"
 
-	for i in `ls *1.fastq.gz`;
+	# Expects the input files to be of the format *R1*.fastq.gz with an identically named R2 pair.
+	for i in `ls | egrep '.*[R]1.*\.fastq\.gz'`;
 	do
-	 	sampleID="${i%1.*.*}"
-	 	SAMPLE_OUTPUT_DIR="${CUR_OUTPUT_DIR}/${sampleID}" 
-	 	mkdir $SAMPLE_OUTPUT_DIR
-	  	echo "Analyzing sample ${sampleID}"
-		/root/kallisto_linux-v0.43.1/kallisto quant -i ${INDEX_DIR}/Homo_sapiens.GRCh38.87.cdna.all.idx -o $SAMPLE_OUTPUT_DIR -b 100 -t 8 ${sampleID}1.fastq.gz ${sampleID}2.fastq.gz
+		read SAMPLE_PREFIX SAMPLE_SUFFIX <<< $(echo $i | awk -F'R1' '{print $1,$2}')
+		SAMPLE_OUTPUT_DIR="${CUR_OUTPUT_DIR}/${SAMPLE_PREFIX}"
+		mkdir $SAMPLE_OUTPUT_DIR
+		echo "Analyzing sample ${SAMPLE_PREFIX}"
+		/root/kallisto_linux-v0.43.1/kallisto quant -i ${INDEX_DIR}/Homo_sapiens.GRCh38.87.cdna.all.idx -o $SAMPLE_OUTPUT_DIR -b 100 -t 8 ${SAMPLE_PREFIX}R1${SAMPLE_SUFFIX} ${SAMPLE_PREFIX}R2${SAMPLE_SUFFIX}
 	done
 
 	echo $?
