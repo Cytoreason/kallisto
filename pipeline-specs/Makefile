@@ -6,6 +6,10 @@ check-pachctl:
 	fi
 	pachctl version
 
+create-input-repos: check-pachctl
+	check-pachctl create-repo kallisto_input_full
+	check-pachctl create-repo kallisto_indices
+
 clean-pipelines: check-pachctl
 	pachctl delete-pipeline kallisto_stage1
 	pachctl delete-repo kallisto_stage1
