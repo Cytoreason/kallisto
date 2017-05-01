@@ -3,7 +3,7 @@
         "name": "kallisto_stage1"
     },
     "transform": {
-        "image": "gcr.io/picicytoreason/kallisto-pipeline:c0ca3f37db403f3952593fb6125a11962bdc22fa",
+        "image": "gcr.io/picicytoreason/kallisto-pipeline:e4e4c1cf31e1bf85e7644e83c369100f4ef58415",
         "cmd": ["/bin/bash"],
         "stdin":[
             "echo 'running stage 1'",
