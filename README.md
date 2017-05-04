@@ -14,9 +14,9 @@ This script outputs the result of running the following command on every pair of
 This assumes that you're familiar with Pachyderm and have a Pachyderm cluster up and running. The pipeline specifications we use at PICI are included in the pipeline-specs folder. Right now all of the specs point to an image hosted on our private Google Container Registry. You'll want to either ask for permission to the registry or to build the image yourself and point the pipeline specs to the location of the image that you've built. Once this is done, all you need to do is run `cd pipeline-specs && make create-input-repos && make create-pipelines`. The makefile assumes you're connecting to Pachyderm directly. To do this you'll want to run `export ADDRESS=xxx.xxx.xxx.xxx:30650` in the shell session that you're working in, where the IP address in question belongs to one of the machines in your Pachyderm cluster. Once you've done this, you'll need to add reference data to your reference repositories. You can use the following commands to accomplish this:
 
 ```
-pachctl start-commit kallisto_indices master && \
-pachctl put-file kallisto_indices master / -r -f gs://pici-pachyderm-reference/kallisto-indices/ && \
-pachctl finish-commit kallisto_indices master
+pachctl start-commit reference_genome_indexes master && \
+pachctl put-file reference_genome_indexes master / -r -f gs://pici-pachyderm-reference/reference_genome_indexes/kallisto && \
+pachctl finish-commit reference_genome_indexes master
 ```
 
 Once the reference data has been loaded, you can kick off a run of the pipeline by commiting data to the input repository:
@@ -34,8 +34,8 @@ You'll need to have the Docker image built or pulled locally. You'll also need t
 
 ```
 ./input_data
-./input_data/kallisto_indices
-./input_data/kallisto_input_full
+./input_data/kallisto_indexes
+./input_data/kallisto_input
 ./input_data/output
 ```
 
@@ -43,7 +43,7 @@ Contact us to get access to our reference repository, or use reference data of y
 
 ```
 sudo docker run -t -i -P -v ./input_data/:/input_data kallisto:latest && \
-/code/run_kallisto.sh /input_data/kallisto_input_full /input_data/output /input_data/kallisto_indices
+/code/kallisto_pipeline_1.sh /input_data/kallisto_input /input_data/output /input_data/kallisto_indexes
 ```
 
 The final output of the pipeline will be in ./input_data/output
