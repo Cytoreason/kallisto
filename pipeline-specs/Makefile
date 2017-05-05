@@ -7,8 +7,8 @@ check-pachctl:
 	pachctl version
 
 create-input-repos: check-pachctl
-	check-pachctl create-repo kallisto_input
-	check-pachctl create-repo reference_genome_indexes
+	pachctl create-repo kallisto_input
+	pachctl create-repo reference_genome_indexes
 
 clean-pipelines: check-pachctl
 	pachctl delete-pipeline kallisto_stage_1
