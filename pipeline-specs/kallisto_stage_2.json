@@ -1,0 +1,32 @@
+{
+    "pipeline": {
+        "name": "kallisto_stage_2"
+    },
+    "transform": {
+        "image": "gcr.io/pici-internal/kallisto-pipeline:0.2",
+        "cmd": ["/bin/bash"],
+        "stdin":[
+            "echo 'running kallisto stage 2'",
+            "/code/kallisto_pipeline_2.sh /pfs/kallisto_stage_1 /pfs/out /pfs/reference_genome_indexes/kallisto/ensg_to_hugo",
+            "echo 'done running kallisto stage 2'"
+        ]
+    },
+    "inputs": [
+        {
+            "name": "kallisto_stage_1",
+            "repo": {
+                "name": "kallisto_stage_1"
+            },
+            "glob": "/*",
+            "lazy": false
+        },
+        {
+            "name": "reference_genome_indexes",
+            "repo": {
+                "name": "reference_genome_indexes"
+            },
+            "glob": "/kallisto/ensg_to_hugo",
+            "lazy": false
+        }
+    ]
+}

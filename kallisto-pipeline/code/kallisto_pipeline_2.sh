@@ -12,7 +12,7 @@ if [ $# -ne 4 ]; then
 	INDEX_DIR=$(readlink -f $3)
 	echo "Using $INPUT_DIR as input directory, $OUTPUT_DIR as output directory, and $INDEX_DIR as index directory"
 else
-	echo "Usage: kallisto_pipeline_1.sh /directory/to/analyze /directory/to/output /directory/with/indices"
+	echo "Usage: kallisto_pipeline_2.sh /directory/to/analyze /directory/to/output /directory/with/indices"
 	exit 1
 fi
 
@@ -31,14 +31,13 @@ do
 	cd $CUR_INPUT_DIR
 	echo "Analyzing files in ${CUR_INPUT_DIR}"
 
-	# Expects the input files to be of the format *R1*.fastq.gz with an identically named R2 pair.
-	for i in `ls | egrep '.*[R]1.*\.fastq\.gz'`;
+	# Iterates through the Experiment folders output by Stage 1
+	for exp in */
 	do
-		read SAMPLE_PREFIX SAMPLE_SUFFIX <<< $(echo $i | awk -F'R1' '{print $1,$2}')
-		SAMPLE_OUTPUT_DIR="${CUR_OUTPUT_DIR}/${SAMPLE_PREFIX}"
-		mkdir $SAMPLE_OUTPUT_DIR
-		echo "Analyzing sample ${SAMPLE_PREFIX}"
-		/root/kallisto_linux-v0.43.1/kallisto quant -i ${INDEX_DIR}/Homo_sapiens.GRCh38.87.cdna.all.idx -o $SAMPLE_OUTPUT_DIR -b 100 -t 8 ${SAMPLE_PREFIX}R1${SAMPLE_SUFFIX} ${SAMPLE_PREFIX}R2${SAMPLE_SUFFIX}
+		EXP=${exp%*/}
+		EXP_INPUT_DIR="${CUR_INPUT_DIR}/${EXP}"
+		echo "Analyzing sample ${exp}"
+		RScript /code/postprocess.R -i ${EXP_INPUT_DIR}/abundance.tsv -r ${INDEX_DIR}/ENSG_to_Hugo.tsv -o ${CUR_OUTPUT_DIR}/${EXP}postprocessed.tsv
 	done
 
 	echo $?
