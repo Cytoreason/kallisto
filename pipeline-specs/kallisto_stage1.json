@@ -18,7 +18,8 @@
                 "name": "kallisto_input_full"
             },
             "glob": "/*",
-            "lazy": false
+            "lazy": false,
+            "from_commit": "ac89270786e44f178348addef325c5f8"
         },
         {
             "name": "kallisto_indices",
