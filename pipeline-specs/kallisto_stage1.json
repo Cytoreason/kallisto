@@ -11,23 +11,23 @@
             "echo 'done running stage 1'"
         ]
     },
-    "inputs": [
-        {
-            "name": "kallisto_input_full",
-            "repo": {
-                "name": "kallisto_input_full"
-            },
-            "glob": "/*",
-            "lazy": false,
-            "from_commit": "ac89270786e44f178348addef325c5f8"
+    "input": {
+        "cross":[
+         {
+            "atom": {
+                "repo": "kallisto_input_full",
+                "glob": "/*",
+                "lazy": false,
+                "from_commit": "ac89270786e44f178348addef325c5f8"
+            }
         },
         {
-            "name": "kallisto_indices",
-            "repo": {
-                "name": "kallisto_indices"
+            "atom": {
+                "repo": "kallisto_indices",
+                "glob": "/",
+                "lazy": false
             },
-            "glob": "/",
-            "lazy": false
         }
-    ]
+        ]
+    }
 }
