@@ -1,32 +1,39 @@
 {
-    "pipeline": {
-        "name": "kallisto_stage1"
-    },
-    "transform": {
-        "image": "gcr.io/picicytoreason/kallisto-pipeline:e4e4c1cf31e1bf85e7644e83c369100f4ef58415",
-        "cmd": ["/bin/bash"],
-        "stdin":[
-            "echo 'running stage 1'",
-            "/code/run_kallisto.sh /pfs/kallisto_input_full /pfs/out /pfs/kallisto_indices",
-            "echo 'done running stage 1'"
-        ]
-    },
-    "input": {
-        "cross":[
-         {
-            "atom": {
-                "repo": "kallisto_input_full",
-                "glob": "/*",
-                "lazy": false
-            }
-        },
-        {
-            "atom": {
-                "repo": "kallisto_indices",
-                "glob": "/",
-                "lazy": false
-            }
+  "pipeline": {
+    "name": "kallisto_stage1"
+  },
+  "transform": {
+    "image": "gcr.io/picicytoreason/kallisto-pipeline:e4e4c1cf31e1bf85e7644e83c369100f4ef58415",
+    "cmd": [
+      "/bin/bash"
+    ],
+    "stdin": [
+      "echo 'running stage 1'",
+      "/code/run_kallisto.sh /pfs/kallisto_input_full /pfs/out /pfs/kallisto_indices",
+      "echo 'done running stage 1'"
+    ]
+  },
+  "parallelism_spec": {
+    "strategy": "CONSTANT",
+    "constant": 1
+  },
+  "input": {
+    "cross": [
+      {
+        "atom": {
+          "repo": "kallisto_input_full",
+          "glob": "/*",
+          "lazy": false
         }
-        ]
-    }
+      },
+      {
+        "atom": {
+          "repo": "kallisto_indices",
+          "glob": "/",
+          "lazy": false
+        }
+      }
+    ]
+  },
+  "scaleDownThreshold": "10m"
 }
