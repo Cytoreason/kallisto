@@ -12,7 +12,7 @@ if [ $# -ne 4 ]; then
 	INDEX_DIR=$(readlink -f $3)
 	echo "Using $INPUT_DIR as input directory, $OUTPUT_DIR as output directory, and $INDEX_DIR as index directory"
 else
-	echo "Usage: run_kallisto.sh /directory/to/analyze /directory/to/output /directory/with/indices"
+	echo "Usage: kallisto_pipeline_1.sh /directory/to/analyze /directory/to/output /directory/with/indices"
 	exit 1
 fi
 
@@ -27,7 +27,6 @@ do
 	CUR_OUTPUT_DIR="${OUTPUT_DIR}/${DIR}"
 	mkdir $CUR_OUTPUT_DIR
 
-	cd $DIR
 	CUR_INPUT_DIR="${INPUT_DIR}/${DIR}"
 	cd $CUR_INPUT_DIR
 	echo "Analyzing files in ${CUR_INPUT_DIR}"
